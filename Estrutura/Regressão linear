@@ -1,1 +1,58 @@
 
+ Regressão Linear
+A regressão linear múltipla foi utilizada para analisar a relação entre a idade no momento do óbito e as variáveis ​​escolaridade, ano e sexo .
+
+Código
+# 1) Leitura e preparo dos dados
+dados <- read.csv2(
+  "DatasetSIM_tratado.csv",
+  fileEncoding = "UTF-8-BOM",
+  stringsAsFactors = FALSE
+)
+
+dados$IDADE <- as.numeric(dados$IDADE)
+
+mapa_escolaridade <- c(
+  "Nenhuma" = 0,
+  "1 a 3 anos" = 2,
+  "4 a 7 anos" = 5.5,
+  "8 a 11 anos" = 9.5,
+  "12 anos ou mais" = 12
+)
+
+dados$ESCOLARIDADE_ANOS <- mapa_escolaridade[dados$ESCOLARIDADE]
+
+dados$SEXO <- factor(
+  dados$SEXO,
+  levels = c("Feminino", "Masculino")
+)
+
+dados_reg <- dados[
+  !is.na(dados$ESCOLARIDADE_ANOS) &
+  !is.na(dados$IDADE) &
+  !is.na(dados$ANO) &
+  !is.na(dados$SEXO),
+]
+
+# 2) Ajuste do modelo múltiplo
+m2 <- lm(
+  IDADE ~ ESCOLARIDADE_ANOS + ANO + SEXO,
+  data = dados_reg
+)
+
+# 3) Previsões
+novos_dados <- data.frame(
+  ESCOLARIDADE_ANOS = c(0, 5.5, 12),
+  ANO = c(2023, 2023, 2023),
+  SEXO = factor(
+    c("Masculino", "Masculino", "Feminino"),
+    levels = c("Feminino", "Masculino")
+  )
+)
+
+previsoes <- predict(m2, novos_dados)
+
+data.frame(
+  novos_dados,
+  IDADE_PREVISTA = round(previsoes, 1)
+)
