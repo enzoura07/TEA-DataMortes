@@ -5,12 +5,12 @@ Objetivo: verificar se o local do óbito acrescenta informação ao modelo anter
 
 Modelo: SEXO_bin ~ IDADE + ESCOLARIDADE + LOCAL_MORTE
 
-Diferenças em relação à Entrega 3:
+Diferenças em relação à  Reg. Log. Base:
 
 Filtro adicional para as 5 categorias de local: Hospital, Outros estabelecimentos de saúde, Domicílio, Outros, Via pública.
 "Hospital" como referência de LOCAL_MORTE.
 A amostra pode ficar menor, então compare os dois modelos com cuidado.
 
-Validação e métricas: as mesmas da Entrega 3.
+Validação e métricas: as mesmas da   Reg. Log. Base.
 
 Resultados a preencher: OR de cada local, acurácia, pseudo R².
