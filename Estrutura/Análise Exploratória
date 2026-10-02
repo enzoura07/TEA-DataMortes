@@ -1,1 +1,117 @@
 
+Análise Exploratória dos Dados
+A análise exploratória tem como objetivo compreender a distribuição das variáveis ​​presentes no conjunto de dados, com foco nos óbitos registrados na Baixada Santista .
+
+Foram considerados os seguintes municípios:
+
+Santos
+São Vicente
+Guarujá
+Praia Grande
+Cubatão
+Código
+# Leitura dos dados
+dados <- read.csv(
+  "DatasetSIM_tratado.csv",
+  sep = ";",
+  dec = ","
+)
+
+# Seleção dos municípios da Baixada Santista
+baixada <- subset(
+  dados,
+  MUNICIPIO %in% c(
+    "Santos",
+    "São Vicente",
+    "Guarujá",
+    "Praia Grande",
+    "Cubatão"
+  )
+)
+
+# Conversão da idade
+baixada$IDADE_ANOS <- as.numeric(
+  as.character(baixada$IDADE)
+)
+
+# Resumo estatístico da idade
+print("Resumo estatístico da Idade:")
+cat("\n")
+
+summary(baixada$IDADE_ANOS)
+
+cat("\n")
+
+print(
+  paste(
+    "Desvio Padrão:",
+    sd(
+      baixada$IDADE_ANOS,
+      na.rm = TRUE
+    )
+  )
+)
+
+# Histograma e boxplot
+par(
+  mfrow = c(1, 2),
+  mar = c(4, 4, 2, 1),
+  pty = "s"
+)
+
+hist(
+  baixada$IDADE_ANOS,
+  prob = TRUE,
+  col = "lightblue",
+  border = "white",
+  main = "Histograma de Idade",
+  xlab = "Idade (anos)",
+  ylab = "Densidade"
+)
+
+curve(
+  dnorm(
+    x,
+    mean = mean(
+      baixada$IDADE_ANOS,
+      na.rm = TRUE
+    ),
+    sd = sd(
+      baixada$IDADE_ANOS,
+      na.rm = TRUE
+    )
+  ),
+  add = TRUE,
+  col = "darkorange",
+  lwd = 2
+)
+
+boxplot(
+  baixada$IDADE_ANOS,
+  col = "lightblue",
+  main = "Boxplot de Idade",
+  ylab = "Idade (anos)"
+)
+
+# Idade por escolaridade
+boxplot(
+  IDADE_ANOS ~ ESCOLARIDADE,
+  data = baixada,
+  col = "lightgreen",
+  main = "Idade do Óbito por Escolaridade",
+  xlab = "Escolaridade",
+  ylab = "Idade (anos)",
+  cex.axis = 0.7
+)
+
+# Frequência de óbitos por sexo
+print("Frequência de Óbitos por Sexo:")
+table(baixada$SEXO)
+
+# Cinco principais causas básicas de morte
+print("Top 5 Causas Básicas de Morte:")
+
+sort(
+  table(baixada$CAUSABASMORTE),
+  decreasing = TRUE
+)[1:5]
