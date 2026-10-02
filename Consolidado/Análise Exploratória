@@ -1,1 +1,19 @@
 
+Análise Exploratória
+
+Objetivo: caracterizar o perfil dos óbitos registrados nos municípios de Santos, São Vicente, Guarujá, Praia Grande e Cubatão.
+
+Dados e preparo:
+
+Base DatasetSIM_tratado.csv, filtrada pelos 5 municípios.
+IDADE convertida para numérico (IDADE_ANOS).
+
+Análises realizadas:
+
+Resumo estatístico e desvio padrão da idade no óbito.
+Histograma com curva normal sobreposta e boxplot da idade.
+Boxplot da idade por nível de escolaridade.
+Frequência de óbitos por sexo.
+Top 5 causas básicas de morte (CAUSABASMORTE).
+
+Resultados a preencher: média/mediana da idade, desvio padrão, proporção por sexo, 5 principais causas.
