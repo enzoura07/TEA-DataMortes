@@ -1,1 +1,11 @@
 
+Regressão linear múltipla
+
+Objetivo: explicar a idade no óbito por escolaridade, ano e sexo.
+
+Modelo: IDADE ~ ESCOLARIDADE_ANOS + ANO + SEXO
+Preparo:
+escolaridade convertida em anos pelo ponto médio de cada faixa (0, 2, 5,5, 9,5, 12);
+SEXO como fator, com Feminino como referência;
+remoção de linhas com NA nas variáveis do modelo.
+Saída: previsões de idade para 3 perfis hipotéticos (2023; escolaridade 0, 5,5 e 12 anos; os dois primeiros masculinos, o terceiro feminino).
