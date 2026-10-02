@@ -1,1 +1,35 @@
 
+Regressão Linear Múltipla
+
+Objetivo: avaliar a relação entre a idade no óbito e escolaridade, ano e sexo.
+
+Modelo: IDADE ~ ESCOLARIDADE_ANOS + ANO + SEXO
+
+Preparo:
+
+Escolaridade convertida em anos pelo ponto médio de cada faixa (0; 2; 5,5; 9,5; 12).
+SEXO como fator, com Feminino como referência.
+Remoção de linhas com NA nas variáveis do modelo.
+
+Saída: previsões de idade para três perfis hipotéticos em 2023 (escolaridade 0 e 5,5 anos para homens; 12 anos para mulher).
+
+Resultados a preencher: coeficientes, p-valores, R² e R² ajustado (use summary(m2), que falta no código atual).
+
+Limitações: pontos médios aproximam a escolaridade real; "12 anos ou mais" tratado como 12 subestima o grupo; não há divisão treino/teste.
+
+Entrega 3: Regressão Logística (Idade e Escolaridade)
+
+Objetivo: verificar se idade e escolaridade se associam ao sexo do falecido.
+
+Modelo: SEXO_bin ~ IDADE + ESCOLARIDADE (1 = Feminino, 0 = Masculino).
+
+Preparo:
+
+Mantém apenas Masculino/Feminino, idade válida e escolaridade diferente de "Ignorado".
+Escolaridade como fator, com "Nenhuma" como referência.
+
+Validação: divisão 70/30, set.seed(42).
+
+Métricas: Odds Ratios com IC 95%, matriz de confusão (corte 0,5), acurácia no teste, pseudo R² de McFadden.
+
+Resultados a preencher: OR por variável, acurácia, pseudo R², proporção da classe majoritária.
