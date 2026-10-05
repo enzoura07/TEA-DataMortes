@@ -1,4 +1,4 @@
-# Teoria-do-aprendizado-estatisco
+DataMortes
 Integrantes:
 Enzo Ura
 Victor Ferreira
