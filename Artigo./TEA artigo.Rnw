@@ -169,7 +169,7 @@ A definição da abordagem estatística segue os preceitos de James et al. (2021
 %     razão nenhuma;
 %   - O PROBLEMA: que decisão, no mundo real, depende desse assunto.
 
-A base analisada corresponde ao arquivo \texttt{DatasetSIM\_tratado.csv}, construído a partir dos microdados do SIM disponibilizados pelo Ministério da Saúde (DATASUS, 2026). Cada registro do conjunto representa um óbito individualizado, contemplando atributos como ANO, DATA\_ÓBITO, IDADE, SEXO, RAÇA\_COR, ESCOLARIDADE, MUNICIPIO, LOCAL\_MORTE e CAUSABASMORTE. O corte amostral submetido à análise compreende $n = [N]$ observações e $p = [P]$ variáveis preditoras candidatas.
+A base analisada corresponde ao arquivo \texttt{dataset_final.csv}, construído a partir dos microdados do SIM disponibilizados pelo Ministério da Saúde (DATASUS, 2026). Cada registro do conjunto representa um óbito individualizado, contemplando atributos como ANO, DATA\_ÓBITO, IDADE, SEXO, RAÇA\_COR, ESCOLARIDADE, MUNICIPIO, LOCAL\_MORTE e CAUSABASMORTE. O corte amostral submetido à análise compreende $n = [N]$ observações e $p = [P]$ variáveis preditoras candidatas.
 
 A opção pelo SIM fundamenta-se na sua abrangência universal, gratuidade e riqueza de marcadores sociais (escolaridade, município de residência, local da ocorrência), que viabilizam o estudo das desigualdades estruturais diante da mortalidade. O problema prático coloca-se sob a perspectiva da gestão municipal de saúde: a tomada de decisão focada na redução de óbitos evitáveis exige identificar de forma precisa os perfis populacionais expostos ao risco de morte precoce. Atualmente, esse acompanhamento costuma limitar-se a análises descritivas de médias agregadas, reduzindo a capacidade de antecipação e alocação preventiva de recursos.
 
@@ -195,7 +195,7 @@ Certidão de óbito: o que ela diz sobre a longevidade na Baixada Santista?
         \midrule
         1. A pergunta & Certidão de óbito: o que ela diz sobre a longevidade na Baixada Santista? \\
         2. Resposta Y & IDADE, quantitativa, anos \\
-        3. Preditores X & ESCOLARIDADE, SEXO, LOCAL\_MORTE, ANO, MUNICIPIO, RAÇA\_COR ($p = [P]$) \\
+        3. Preditores X & ESCOLARIDADE, SEXO, LOCAL\_MORTE, ANO, MUNICIPIO, RAÇA ($p = [P]$) \\
         4. Tipo: decisões & Supervisionado; regressão; predição \\
         5. Métrica & RMSE, em anos \\
         6. Linha de base a bater & RMSE = $[X,XX]$ anos (previsão ingênua pela média) \\
