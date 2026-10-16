@@ -1,0 +1,223 @@
+
+\documentclass[
+  article,
+  12pt,
+  oneside,
+  a4paper,
+  english,
+  brazil
+]{abntex2}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{icomma}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[alf]{abntex2cite}
+
+\hypersetup{hidelinks}
+
+% ----------------------------------------------------------
+% DADOS DA ENTREGA — preencha aqui
+% ----------------------------------------------------------
+\titulo{"Certidão de óbito: o que ela diz sobre a longevidade na Baixada Santista?"}
+% O abntex2 imprime um "titulo estrangeiro" logo abaixo do titulo quando o
+% documento declara mais de um idioma. Deixe vazio se nao houver.
+\tituloestrangeiro{}
+\autor{DataMortes}
+\local{Santos-SP}
+\data{\today}
+
+\newcommand{\nomecurso}{Tecnologia em Ciência de Dados}
+\newcommand{\nomedisciplina}{Teoria do Aprendizado Estatístico}
+\newcommand{\nomeprofessor}{Prof.\ Dr.\ João Paulo Ferreira de Mello}
+\newcommand{\repositorio}{DataMortes}
+% Um integrante por linha: Nome Completo -- RA
+\newcommand{\integrantes}{%
+   Enzo Shinji Sugano Ura -- RA 0051352511025 \\
+ Felipe Juca Gozza Borges -- RA 0051352411031 \\
+  Victor Ferreira Santos  -- RA 0051352511028%
+}
+
+\begin{document}
+
+<<setup, include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+  echo       = FALSE,   # o codigo NAO aparece: ele mora em estrutura/codigo/
+  message    = FALSE,
+  warning    = FALSE,
+  fig.align  = "center",
+  out.width  = "0.52\\linewidth",
+  fig.width  = 4,
+  fig.height = 4
+)
+options(OutDec = ",", digits = 4)
+@
+
+% Os numeros abaixo foram calculados a partir do dataset_final (n = 474.651 registros
+% originais; 458.897 apos a limpeza descrita na Secao 4) e inseridos diretamente no texto.
+
+\selectlanguage{brazil}
+\frenchspacing
+
+% ----------------------------------------------------------
+% IDENTIFICAÇÃO
+% ----------------------------------------------------------
+\maketitle
+
+\begin{center}
+  \small
+  Fatec Baixada Santista -- Rubens Lara \\
+  \nomecurso{} \quad|\quad \nomedisciplina{} \quad|\quad \nomeprofessor{} \\[0.4em]
+  \integrantes \\[0.4em]
+  Repositório: \texttt{\repositorio}
+\end{center}
+
+\textual
+
+% ==========================================================================
+\section{Introdução}
+% ==========================================================================
+% ~meia página. O QUE VAI AQUI:
+%   - de que assunto trata o trabalho (o domínio, em linguagem comum);
+%   - por que esse assunto importa, e para quem;
+%   - o que este texto entrega: a pergunta que o grupo vai perseguir
+%     no resto do semestre, e a evidência de que ela se sustenta.
+% NÃO adiante aqui os números da Seção 4.
+
+O Sistema de Informação sobre Mortalidade (SIM) concentra as declarações de óbito em todo o território nacional e se consolida como a fonte primária para analisar os padrões demográficos e epidemiológicos de mortalidade. Na região da Baixada Santista, a idade de falecimento apresenta acentuada variabilidade entre os municípios e os diferentes recortes socioeconômicos. Compreender os fatores associados às mortes prematuras constitui uma demanda central para a formulação de políticas públicas e o planejamento dos serviços regionais de saúde. Este trabalho apresenta a estrutura da base de dados selecionada, formaliza a pergunta central da pesquisa e demonstra a viabilidade analítica do conjunto de dados para responder a essa questão.
+
+A definição da abordagem estatística segue os preceitos de James et al. (2021), que condicionam a escolha entre regressão e classificação à natureza quantitativa ou qualitativa da variável de interesse. Visto que a idade no momento do óbito se expressa numericamente em uma escala contínua, o problema enquadra-se estritamente na classe dos modelos de regressão. Quanto ao critério de avaliação do desempenho preditivo, adota-se o erro quadrático médio da raiz (RMSE), métrica usual para respostas quantitativas (BRUCE; BRUCE; GEDECK, 2020), definida antes do ajuste dos modelos para que não seja escolhida a posteriori em favor do modelo vencedor.
+
+% ==========================================================================
+\section{O banco de dados e o problema}
+% ==========================================================================
+% ~três quartos de página. O QUE VAI AQUI:
+%   - ORIGEM: de onde veio o banco (órgão, portal, empresa, coleta própria),
+%     com a referência bibliográfica e a data de acesso;
+%   - CONTEÚDO: o que é uma LINHA (uma pessoa? um mês? uma transação?),
+%     quantas linhas, quantas colunas, quais são as principais;
+%   - MOTIVAÇÃO: por que este banco, e não outro. Responda honestamente:
+%     foi interesse pelo assunto? disponibilidade? experiência prévia
+%     do grupo? Todas são razões legítimas -- o que não vale é não ter
+%     razão nenhuma;
+%   - O PROBLEMA: que decisão, no mundo real, depende desse assunto.
+
+A base analisada corresponde ao arquivo \texttt{dataset\_final.csv}, construído a partir dos microdados do SIM disponibilizados pelo Ministério da Saúde (MINISTÉRIO DA SAÚDE, 2026), referentes aos anos de 2020 a 2024. Cada registro do conjunto representa um óbito individualizado, contemplando atributos como ANO, DATA DE ÓBITO, IDADE, SEXO, RAÇA, ESCOLARIDADE, MUNICIPIO, LOCAL\_MORTE, OCUP e CAUSA BASICA DA MORTE. A base original reúne 474.651 registros; após o tratamento dos dados ausentes (Seção 4), o corte amostral submetido à análise compreende $n = 458.897$ observações e $p = 6$ variáveis preditoras candidatas.
+
+A opção pelo SIM fundamenta-se na sua abrangência universal, gratuidade e riqueza de marcadores sociais (escolaridade, município de residência, local da ocorrência), que viabilizam o estudo das desigualdades estruturais diante da mortalidade. O problema prático coloca-se sob a perspectiva da gestão municipal de saúde: a tomada de decisão focada na redução de óbitos evitáveis exige identificar de forma precisa os perfis populacionais expostos ao risco de morte precoce. Atualmente, esse acompanhamento costuma limitar-se a análises descritivas de médias agregadas, reduzindo a capacidade de antecipação e alocação preventiva de recursos.
+
+% ==========================================================================
+\section{A pergunta}
+% ==========================================================================
+% ~três quartos de página. O QUE VAI AQUI:
+%   - a pergunta em UMA FRASE, sem jargão -- alguém de fora da área
+%     precisa entendê-la;
+%   - a ficha de sete campos preenchida (Tabela 1);
+%   - um parágrafo justificando o TIPO: por que regressão e não
+%     classificação (ou o contrário), e por que predição e não inferência.
+
+Certidão de óbito: o que ela diz sobre a longevidade na Baixada Santista?
+
+\begin{table}[htbp]
+    \centering
+    \caption{Ficha da pergunta}
+    \vspace{0.2cm}
+    \begin{tabularx}{\textwidth}{>{\bfseries\raggedright\arraybackslash}p{4.5cm} X}
+        \toprule
+        Campo & Preenchimento \\
+        \midrule
+        1. A pergunta & Certidão de óbito: o que ela diz sobre a longevidade na Baixada Santista? \\
+        2. Resposta Y & IDADE, quantitativa, anos \\
+        3. Preditores X & ESCOLARIDADE, SEXO, LOCAL\_MORTE, ANO, MUNICIPIO, RAÇA ($p = 6$) \\
+        4. Tipo: decisões & Supervisionado; regressão; predição \\
+        5. Métrica & RMSE, em anos \\
+        6. Linha de base a bater & RMSE = $16,90$ anos (previsão ingênua pela média) \\
+        7. Dono do problema & Secretaria Municipal de Saúde: direcionamento prioritário de ações preventivas \\
+        \bottomrule
+    \end{tabularx}
+    \\[0.1cm]
+    {\footnotesize Fonte: Elaborada pelo autor.}
+    \label{tab:ficha}
+\end{table}
+
+\textbf{Justificativa da escolha do tipo de problema.} O propósito central deste estudo reside na construção de um modelo capaz de antecipar o valor de $Y$ em novos registros de óbito, configurando uma tarefa clássica de predição. Caso o intuito fosse mensurar o peso isolado ou a significância do efeito de cada atributo sobre a expectativa de vida, o enquadramento correto seria o de inferência estatística. A definição expressa do proprietário do problema assegura utilidade operacional à pesquisa, ligando o desempenho do modelo diretamente à tomada de decisão administrativa.
+
+
+
+% ==========================================================================
+\section{Defesa da pergunta}
+% ==========================================================================
+% ~uma página. É A SEÇÃO QUE PESA MAIS. O QUE VAI AQUI:
+%   - o diagnóstico do banco (Tabela 2), comentado item a item;
+%   - a passagem pelos quatro descartes: vazamento, n contra p, balanço
+%     de classes, faltantes -- dizendo o que foi encontrado e o que o
+%     grupo fez a respeito;
+%   - a figura da resposta (Figura 1), com uma frase de leitura;
+%   - o veredito: a pergunta se sustenta? Se um descarte pegou, o que
+%     mudou na pergunta por causa dele?
+% Os números desta seção saem do bloco <<dados>> -- eles se atualizam
+% sozinhos quando voces trocarem o banco.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Diagnóstico do banco de dados}
+    \vspace{0.2cm}
+    \begin{tabularx}{\textwidth}{>{\bfseries\raggedright\arraybackslash}p{5cm} X}
+        \toprule
+        Verificação & Resultado \\
+        \midrule
+        Tamanho ($n \times p$) & $458.897 \times 6$ \\
+        Linha de base & RMSE = $16,90$ anos \\
+        Maior associação com Y & MUNICIPIO: razão de correlação $\eta = 0,267$ ($\eta^2 = 0,071$) \\
+        Balanço das classes & Não se aplica (variável resposta quantitativa) \\
+        Valores faltantes (base original) & ESCOLARIDADE: 14.127 (4.133 em branco e 9.994 ``Ignorado''); RAÇA: 1.787; IDADE: 227; demais preditores: nenhum \\
+        \bottomrule
+    \end{tabularx}
+    \\[0.1cm]
+    {\footnotesize Fonte: Elaborada pelo autor.}
+    \label{tab:diagnostico}
+\end{table}
+
+\textbf{Prevenção contra vazamento de dados (\textit{data leakage}).} A variável CAUSA BASICA DA MORTE (codificada pela CID-10) apresenta um risco metodológico crítico: determinadas patologias (como afecções originadas no período perinatal) ocorrem quase exclusivamente no primeiro ano de vida, enquanto causas externas concentram-se fortemente nas faixas jovens. Embora não configure uma duplicação direta da resposta, a inclusão dessa coluna torna a previsão artificialmente fácil e desvia a pergunta de pesquisa para um diagnóstico retrospectivo da causa. Por este motivo, CAUSA BASICA DA MORTE e eventuais colunas derivadas da idade foram excluídas dos preditores.
+
+\textbf{Adequação da amostragem.} Com $n = 458.897$ observações para $p = 6$ preditoras, o volume amostral garante um número elevado de observações por parâmetro estimado, mesmo após a expansão das variáveis categóricas em termos \textit{dummy}. Essa robustez estatística viabiliza o emprego de técnicas flexíveis e o particionamento em subconjuntos independentes de treino e teste sem comprometer a estabilidade. Ademais, em bases populosas, testes de hipóteses tendem a apontar significância estatística para variações irrelevantes; por isso, a avaliação pelo RMSE, expressa em anos, provê um critério mais pragmático.
+
+\textbf{Tratamento de faltantes e distribuição.} Sendo a resposta contínua, a verificação de desequilíbrio volta-se para a representatividade geográfica entre os municípios: Santos concentra 42,1\% dos registros originais e Bertioga, 1,7\%, o que deve ser considerado na interpretação dos resultados. No tocante aos dados ausentes, o atributo ESCOLARIDADE registra 14.127 entradas em branco ou ``Ignorado'' (3,0\% da base). Foram descartados esses registros e também os que não informam IDADE, RAÇA ou SEXO, o que reduz a amostra de 474.651 para 458.897 observações (perda de 3,3\%); esse impacto é reportado para garantir a reprodutibilidade do estudo.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth, height=8cm, keepaspectratio]{histograma.png}
+    \caption{Distribuição de frequência da idade no óbito}
+    {\footnotesize Fonte: Elaborada pelo autor com base nos dados do SIM (2026).}
+    \label{fig:hist}
+\end{figure}
+
+A Figura \ref{fig:hist} retrata a distribuição de frequência da idade no óbito. Observa-se assimetria à esquerda (mediana de 70 anos, média de 67,9 e desvio-padrão de 16,9), com pico em idades avançadas e uma cauda alongada decorrente da mortalidade infantil e de jovens. Essa assimetria evidencia a fragilidade do valor médio global enquanto estimador simples, estabelecendo uma linha de base com margem de melhoria para os algoritmos.
+
+\textbf{Sustentação da tese.} A pergunta de pesquisa demonstra consistência ao cumprir três preceitos: eliminação de preditores que vazam informação da resposta; existência de margem para superação da linha de base (as razões de correlação $\eta^2$ individuais variam de 0,002, para ANO, a 0,071, para MUNICIPIO, indicando sinal modesto em cada preditor); e preservação da integridade amostral (perda de apenas 3,3\% dos registros). Destaca-se que a formulação atual possui caráter preliminar: procedimentos subsequentes de regularização (Ridge, Lasso e validação cruzada) poderão indicar a concentração do poder preditivo em um subconjunto mais enxuto de variáveis.
+
+% ---------------------------------------------------
+% REFERÊNCIAS
+% ---------------------------------------------------
+\vspace{1cm}
+\begin{center}
+    \textbf{REFERÊNCIAS}
+\end{center}
+\vspace{0.5cm}
+
+\noindent
+BRUCE, P.; BRUCE, A.; GEDECK, P. \textbf{Practical Statistics for Data Scientists}: 50+ Essential Concepts Using R and Python. 2. ed. Sebastopol: O'Reilly Media, 2020.
+\vspace{0.5cm}
+
+\noindent
+JAMES, G. et al. \textbf{An Introduction to Statistical Learning}: with Applications in R. 2. ed. New York: Springer, 2021.
+\vspace{0.5cm}
+
+\noindent
+MINISTÉRIO DA SAÚDE. \textbf{Sistema de Informação sobre Mortalidade (SIM)}. DATASUS, 2026. Disponível em: <http://datasus.saude.gov.br>. Acesso em: [inserir data de acesso].
+
+\end{document}
