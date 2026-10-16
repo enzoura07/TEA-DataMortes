@@ -1,4 +1,4 @@
- 📊 Consolidado Explicativo da Análise
+ Consolidado Explicativo da Análise
 
 Este estudo teve como objetivo modelar a relação entre a **idade ao óbito** (`IDADE`) e a **escolaridade em anos equivalentes** (`ESCOLARIDADE_NUM`), comparando uma abordagem paramétrica linear clássica com estimadores não-paramétricos de suavização (**KNN** e **Kernel de Nadaraya-Watson**).
 
