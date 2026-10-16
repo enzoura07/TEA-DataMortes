@@ -4,10 +4,6 @@
 
 Este material documenta o notebook `metodosSuavização.ipynb`, que investiga a relação entre **escolaridade** e **idade ao óbito** por meio de modelos de regressão e métodos de suavização. O objetivo computacional é comparar modelos com diferentes níveis de flexibilidade e avaliar se uma relação linear simples descreve adequadamente os dados ou se um método não paramétrico consegue capturar padrões adicionais.
 
-O notebook trabalha com dados carregados de `dataset_final.xlsx`, realiza uma limpeza inicial, define uma variável numérica de escolaridade, separa os dados em treino e teste, seleciona parâmetros por validação cruzada e compara previsões usando o erro quadrático médio (MSE) e a raiz do erro quadrático médio (RMSE).
-
-**Importante:** o código do notebook define o procedimento de análise, mas os trechos fornecidos não incluem a saída efetiva das células. Portanto, este consolidado explica o método e o que cada etapa permite concluir, sem inventar valores finais de MSE, RMSE, `k` ou `h`.
-
 ## 2. Pergunta analítica e variáveis
 
 ### 2.1 Pergunta central
