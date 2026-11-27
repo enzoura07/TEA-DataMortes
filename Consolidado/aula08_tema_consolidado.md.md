@@ -1,4 +1,4 @@
-# Consolidado — PI III — Aula 08 — Tema 1 (proximidade e janela) — 27/11/2026
+# Consolidado — PI III — Aula 08 — Tema 1 (proximidade e janela) — 26/11/2026
 *guia versão 1 · tutora: Gemini · motor09*
 **Aluno:** Enzo Shinji Sugano Ura
 
